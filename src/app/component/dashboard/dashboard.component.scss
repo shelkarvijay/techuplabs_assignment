@@ -1,0 +1,19 @@
+.dashboard-container {
+    @media (min-width: 767px) {
+        width: 700px;
+    }
+}
+
+.action-btn {
+    width: 150px;
+    height: 40px;
+}
+
+@media (min-width: 425px) {
+    .action-container {
+        justify-content: space-between;
+    }
+    .dashboard-container {
+        padding: 0 10px;
+    }
+}

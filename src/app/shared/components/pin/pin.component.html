@@ -1,0 +1,72 @@
+<div class="modal-body">
+    <form [formGroup]="pinForm" class="needs-validation" novalidate>
+        <div class="container">
+            <div class="form-group row mb-2">
+                <label for="inputTitle" class="col-sm-3 col-form-label">Title</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputTitle" formControlName="title"
+                        [ngClass]="{'is-invalid': f['title'].touched && f['title'].errors, 'is-valid': f['title'].valid }"
+                        required>
+                    <div *ngIf="f['title'].touched && f['title'].errors" class="invalid-feedback">
+                        <div *ngIf="f['title'].errors['required']">Title is required!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label for="inputEmail" class="col-sm-3 col-form-label">Image</label>
+                <div class="col">
+                    <div class="col-sm-9">
+                        <div ng2FileDrop
+                            [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                            (fileOver)="fileOverBase($event)"
+                            [uploader]="uploader"
+                            class="well my-drop-zone p-2" required>
+                            Drag & Drop file here
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div *ngFor="let item of uploader.queue">
+                            <strong>{{ item?.file?.name }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-2">
+                <label for="inputCollab" class="col-sm-3 col-form-label">Collaboratory</label>
+                <div class="col-sm-9">
+                    <ngx-select [items]="customersList" [multiple]="true" id="inputCollab" formControlName="collab"
+                        [ngClass]="{'is-invalid': f['collab'].touched && f['collab'].errors, 'is-valid': f['collab'].valid }"
+                        required></ngx-select>
+                    <div *ngIf="f['collab'].touched && f['collab'].errors" class="invalid-feedback">
+                        <div *ngIf="f['collab'].errors['required']">Region is required!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-5">
+                <label for="inputCoutry" class="col-sm-3 col-form-label">Privacy</label>
+                <div class="col-sm-9">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="privacy" id="inlineRadio1" value="1"
+                        formControlName="privacy" required>
+                        <label class="form-check-label" for="inlineRadio1">Private</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="privacy" id="inlineRadio2" value="2"
+                        formControlName="privacy" required>
+                        <label class="form-check-label" for="inlineRadio2">Public</label>
+                    </div>
+                    <div *ngIf="f['privacy'].touched && f['privacy'].errors" class="invalid-feedback">
+                        <div *ngIf="f['privacy'].errors['required']">Privacy is required!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center">
+                <div class="col-6">
+                    <button type="submit" style="width: 100%;" class="btn btn-primary" (click)="onSubmit()" [disabled]="pinForm.invalid || uploader.queue.length === 0">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
