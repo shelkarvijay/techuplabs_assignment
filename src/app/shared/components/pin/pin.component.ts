@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Customer, Pin } from '../../interfaces/interfaces';
 import { FileUploader } from 'ng2-file-upload';
@@ -10,7 +10,7 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
   templateUrl: './pin.component.html',
   styleUrls: ['./pin.component.scss']
 })
-export class PinComponent implements OnInit {
+export class PinComponent implements OnInit, AfterViewInit {
   pinForm!: FormGroup;
   customersList: Customer[] = [];
   uploader!: FileUploader;
@@ -18,7 +18,8 @@ export class PinComponent implements OnInit {
   localImageUrl: any;
   @Output('onSubmitPin') onSubmitPin: EventEmitter<any> = new EventEmitter();
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cdRef: ChangeDetectorRef
   ) {
     this.uploader = new FileUploader({
       url: URL,
@@ -51,6 +52,10 @@ export class PinComponent implements OnInit {
   ngOnInit(): void {
     this.customersList = JSON.parse(localStorage.getItem('customers') || '[]').map((item: Customer) => item.title);
     this.createForm();
+  }
+
+  ngAfterViewInit(): void {
+    this.cdRef.detectChanges(); 
   }
 
   createForm() {

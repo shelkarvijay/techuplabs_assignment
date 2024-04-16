@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Customer } from '../../interfaces/interfaces';
 import { ApiService } from '../../services/api.service';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.scss']
 })
-export class CustomerComponent implements OnInit, OnDestroy {
+export class CustomerComponent implements OnInit, AfterViewInit, OnDestroy {
   customerForm!: FormGroup;
   regionsList: any[] = [];
   allRegionData: any[] = [];
@@ -20,12 +20,17 @@ export class CustomerComponent implements OnInit, OnDestroy {
   
   constructor(
     private formBuilder: FormBuilder,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.createForm();
     this.getCountries();
+  }
+
+  ngAfterViewInit(): void {
+    this.cdRef.detectChanges(); 
   }
 
   createForm() {

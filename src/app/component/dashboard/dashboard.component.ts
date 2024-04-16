@@ -28,14 +28,6 @@ export class DashboardComponent implements OnInit {
     this.dashboardData = JSON.parse(localStorage.getItem('pins') || '[]');
   }
 
-  /**
-   * Here, when modal is opening, the ExpressionChangedAfterItHasBeenCheckedError will occurs on console
-   * because modal template content is load before modal.
-   * And this error comes only in developer mode.
-   * To fix this we have to use setTimeout or Angular lifecycle hooks like ngAfterViewInit, ngAfterContentInit.
-   * I was tried this but can't resolved yet, need to check more and may be it will take time, so leaving
-   * as it is for now.
-   */
   showTemplate(content: TemplateRef<any>, type: string) {
     this.enableCustomerTemplate = type === 'customer';
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });  
