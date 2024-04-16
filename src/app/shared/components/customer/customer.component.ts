@@ -42,7 +42,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
   getCountries() {
     this.subscription = this.apiService.getCountries('countries').subscribe({
         next: (response) => {
-          if(response && response.status.includes('ok') && response['status-code'] === 200) {
+          if(response && response.status.toUpperCase().includes('OK') && response['status-code'] === 200) {
             this.allRegionData = Object.keys(response.data).map((item) => response.data[item]);
             let regionList = this.allRegionData.map((item) => item.region);
             this.regionsList = [...new Set(regionList)];
